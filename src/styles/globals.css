@@ -140,6 +140,7 @@ a {
 
 body {
   font-family: "Inter" !important;
+  overflow-x: hidden;
 }
 
 

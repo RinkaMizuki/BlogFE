@@ -7,7 +7,7 @@ export const ColorModeContext = createContext({ toggleColorMode: () => { }, mode
 
 function App() {
   const [mode, setMode] = useState<PaletteMode>(() => {
-    const mode = JSON.parse(localStorage.getItem("mode") || 'dark');
+    const mode = JSON.parse(localStorage.getItem("mode") || JSON.stringify('dark'));
     return mode
   });
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

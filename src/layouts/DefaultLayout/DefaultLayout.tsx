@@ -1,12 +1,13 @@
 import { ReactNode } from "react";
-import Header from "../components/Header";
+import { Footer, Header } from "../components";
 
 const DefaultLayout = ({ children }: { children: ReactNode }) => {
 
   return (
-    <div>
+    <div className="mb-12">
       <Header />
       {children}
+      <Footer />
     </div>
   )
 };
