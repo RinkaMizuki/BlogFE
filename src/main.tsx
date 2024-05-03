@@ -36,6 +36,19 @@ const router = createBrowserRouter([
             <routes.about.element />
           </DefaultLayout>
         )
+      },
+      {
+        path: routes.detail.path,
+        element: (
+          <DefaultLayout>
+            <routes.detail.element />
+          </DefaultLayout>
+        )
+      },
+      //notfound router
+      {
+        path: routes.notfound.path,
+        element: <routes.notfound.element />
       }
     ]
   }

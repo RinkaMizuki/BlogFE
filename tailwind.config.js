@@ -23,7 +23,7 @@ export default {
           'text-wrap': 'nowrap'
         },
         '.text-header': {
-          'font-size': '2.5vw',
+          'font-size': '3vw',
         },
         '.text-link': {
           'font-size': '1.5vw',

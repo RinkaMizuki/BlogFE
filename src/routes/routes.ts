@@ -1,5 +1,5 @@
 import { default as config } from "../config/config";
-import { About, Home } from "../pages";
+import { About, Detail, Home, Notfound } from "../pages";
 import { Newsletter } from "../pages";
 
 const routes = {
@@ -14,6 +14,14 @@ const routes = {
   about: {
     path: config.about,
     element: About,
+  },
+  detail: {
+    path: config.detail,
+    element: Detail
+  },
+  notfound: {
+    path: config.notfound,
+    element: Notfound
   }
 }
 

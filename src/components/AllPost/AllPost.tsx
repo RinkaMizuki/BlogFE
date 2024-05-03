@@ -11,10 +11,14 @@ interface Props {
 const AllPost = ({ fakeData, paging, showBtn = false }: Props) => {
   return (
     <section className="flex flex-col items-center gap-16 self-stretch">
-      <div className="flex w-full py-[32px] flex-col items-start gap-8 border-b border-solid border-[#eaecf05c]">
+      <div className="flex w-full py-[32px] flex-col items-start gap-10 border-b border-solid border-[#eaecf05c]">
         <h1 className="text-2xl font-medium">All blog posts</h1>
         <Box sx={{ width: '100%' }}>
-          <Grid container rowSpacing={{ xs: 3, sm: 3, md: 3 }} columnSpacing={{ xs: 3, sm: 3, md: 3 }}>
+          <Grid
+            container
+            rowSpacing={{ xs: 3, sm: 3, md: 3 }}
+            columnSpacing={{ xs: 3, sm: 3, md: 3 }}
+          >
             {Array.from({ length: paging || fakeData.length + 1 }).map((_, index) => (
               <Grid xs={12} md={6} lg={4} key={index}>
                 <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
@@ -24,7 +28,7 @@ const AllPost = ({ fakeData, paging, showBtn = false }: Props) => {
         </Box>
         {showBtn && <Button
           sx={{
-            textTransform: "unset",
+            paddingX: '20px',
             alignSelf: "center",
             color: "#ffffff",
             backgroundColor: "#7F56D9",
