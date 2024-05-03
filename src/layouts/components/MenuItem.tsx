@@ -26,19 +26,18 @@ const MenuItem = ({ toggleColorMode, mode, handleClose }: Mode) => {
         cursor: 'pointer',
         marginBottom: "20px"
       }}>Group H</Typography>
-      <Link to='/'>
+      <Link to='/' onClick={handleClose}>
         Blog
       </Link>
-      <Link to='/'>
+      <Link to='/projects' onClick={handleClose}>
         Projects
       </Link>
-      <Link to='/'>
+      <Link to='/about' onClick={handleClose}>
         About
       </Link>
-      <Link to='/'>
+      <Link to='/newsletter' onClick={handleClose}>
         Newsletter
       </Link>
-
       <Box
         sx={{
           marginTop: "30px",
