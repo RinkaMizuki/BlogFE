@@ -1,7 +1,7 @@
 import { Box, Button, Modal, useMediaQuery, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ColorModeContext } from "../../App";
 import { MenuItem } from "./index";
 
@@ -26,11 +26,14 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const location = useLocation();
+
   return (
     <div className="inline-flex p-header w-full">
       <div className="h-[65px] flex justify-between flex-1 items-center">
         <div className="flex justify-center items-center">
-          <h1 className="font-medium text-header cursor-pointer">Group H</h1>
+          <Link to="/" className="font-medium text-header cursor-pointer">Group H</Link>
         </div>
         {matches ?
           <>
@@ -49,10 +52,10 @@ const Header = () => {
             </Modal>
           </>
           : <div className="flex justify-center items-center gap-8 font-thin text-lg">
-            <Link to="/" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full`}>Blog</Link>
-            <Link to="/projects" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full`}>Projects</Link>
-            <Link to="/about" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full`}>About</Link>
-            <Link to="/newsletter" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full`}>Newsletter</Link>
+            <Link to="/" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full  ${location.pathname === '/' ? 'after:w-full' : ''}`}>Blog</Link>
+            <Link to="/projects" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full ${location.pathname === '/projects' ? 'after:w-full' : ''}`}>Projects</Link>
+            <Link to="/about" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full  ${location.pathname === '/about' ? 'after:w-full' : ''}`}>About</Link>
+            <Link to="/newsletter" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full ${location.pathname === '/newsletter' ? 'after:w-full' : ''}`}>Newsletter</Link>
             <Box
               className="flex p-mode rounded-[29px] gap-3"
               sx={{

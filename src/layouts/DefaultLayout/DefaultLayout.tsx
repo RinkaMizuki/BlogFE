@@ -4,7 +4,7 @@ import { Footer, Header } from "../components";
 const DefaultLayout = ({ children }: { children: ReactNode }) => {
 
   return (
-    <div className="mb-12">
+    <div className="mb-8">
       <Header />
       {children}
       <Footer />

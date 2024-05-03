@@ -1,15 +1,15 @@
 import { Box, Button } from "@mui/material";
 import { useContext } from "react";
 import { ColorModeContext } from "../App";
-import CartPost from "../components/CartPost";
 import image1 from "../assets/images/Image1.png";
 import image2 from "../assets/images/Image2.png";
 import image3 from "../assets/images/Image3.png";
 import image4 from "../assets/images/Image4.png";
 import image5 from "../assets/images/Image5.png";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import AllPost from "../components/AllPost";
+import RecentPost from "../components/RecentPost";
 
-const fakeData = [
+export const fakeData = [
   {
     image: image1,
     desc: "How do you create compelling presentations that wow your colleagues and impress your managers?",
@@ -51,74 +51,8 @@ const Home = () => {
       }}>
         <h1 className="text-title font-semibold letter-spacing leading-none cursor-default select-none">THE BLOG</h1>
       </Box>
-      <section className="flex flex-col items-center gap-12 self-stretch mt-8">
-        <h1 className="text-2xl font-medium self-start">Recent blog posts</h1>
-        <Grid container direction="column" rowSpacing={{ xs: 3, sm: 3, md: 5 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid container direction="row">
-            <Grid lg={6} md={12}>
-              <CartPost image={fakeData[0].image} desc={fakeData[0].desc} line={fakeData[0].line} />
-            </Grid>
-            <Grid lg={6} direction="column" md={12}>
-              <Grid lg={6} md={12} marginBottom={1}>
-                <CartPost wrap="wrap" image={fakeData[1].image} desc={fakeData[1].desc} line={fakeData[1].line} isRow={true} />
-              </Grid>
-              <Grid lg={6} md={12}>
-                <CartPost wrap="wrap" image={fakeData[2].image} desc={fakeData[2].desc} line={fakeData[2].line} isRow={true} />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid md={12}>
-            <CartPost wrap="wrap" image={fakeData[3].image} desc={fakeData[3].desc} line={fakeData[3].line} isRow={true} isLg={true} />
-          </Grid>
-        </Grid>
-      </section>
-      <section className="flex flex-col items-center gap-16 self-stretch">
-        <div className="flex w-full py-[32px] flex-col items-start gap-8 border-b border-solid border-[#eaecf05c]">
-          <h1 className="text-2xl font-medium">All blog posts</h1>
-          <Box sx={{ width: '100%' }}>
-            <Grid container rowSpacing={{ xs: 3, sm: 3, md: 3 }} columnSpacing={{ xs: 3, sm: 3, md: 3 }}>
-              <Grid xs={12} md={6} lg={4}>
-                <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-              </Grid>
-              <Grid xs={12} md={6} lg={4}>
-                <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-              </Grid>
-              <Grid xs={12} md={6} lg={4}>
-                <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-              </Grid>
-              <Grid xs={12} md={6} lg={4}>
-                <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-              </Grid>
-              <Grid xs={12} md={6} lg={4}>
-                <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-              </Grid>
-              <Grid xs={12} md={6} lg={4}>
-                <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-              </Grid>
-            </Grid>
-          </Box>
-          {/* <Grid2 container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-            <Grid2 xs={2} sm={4} md={4}>
-              <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-            </Grid2>
-            <Grid2 xs={2} sm={4} md={4}>
-              <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-            </Grid2>
-            <Grid2 xs={2} sm={4} md={4}>
-              <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-            </Grid2>
-            <Grid2 xs={2} sm={4} md={4}>
-              <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-            </Grid2>
-            <Grid2 xs={2} sm={4} md={4}>
-              <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-            </Grid2>
-            <Grid2 xs={2} sm={4} md={4}>
-              <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
-            </Grid2>
-          </Grid2> */}
-        </div>
-      </section>
+      <RecentPost fakeData={fakeData} />
+      <AllPost fakeData={fakeData} />
       <Box className="flex justify-between w-full mt-6 max-md:flex-col max-md:justify-center max-md:items-center">
         <Button sx={{
           display: "flex",

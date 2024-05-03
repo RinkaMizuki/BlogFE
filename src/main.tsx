@@ -20,6 +20,22 @@ const router = createBrowserRouter([
             <routes.home.element />
           </DefaultLayout>
         ),
+      },
+      {
+        path: routes.newsletter.path,
+        element: (
+          <DefaultLayout>
+            <routes.newsletter.element />
+          </DefaultLayout>
+        )
+      },
+      {
+        path: routes.about.path,
+        element: (
+          <DefaultLayout>
+            <routes.about.element />
+          </DefaultLayout>
+        )
       }
     ]
   }

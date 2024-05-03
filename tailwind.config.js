@@ -18,6 +18,10 @@ export default {
           'font-size': '16vw',
           'text-wrap': 'nowrap'
         },
+        '.text-name': {
+          'font-size': '13vw',
+          'text-wrap': 'nowrap'
+        },
         '.text-header': {
           'font-size': '2.5vw',
         },
