@@ -33,7 +33,7 @@ const Detail = () => {
           <Grid md={12}>
             <h1 className="text-2xl font-medium self-start">Recent blog posts</h1>
           </Grid>
-          {Array.from({ length: 5 }).map((elm, index) => (
+          {Array.from({ length: 5 }).map(() => (
             <Grid>
               <CartPost image={fakeData[4].image} desc={fakeData[4].desc} line={fakeData[4].line} />
             </Grid>

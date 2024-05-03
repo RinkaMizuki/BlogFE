@@ -1,8 +1,5 @@
-import { Button } from "@mui/material";
-import Input from '@mui/material/Input';
 import { useContext } from "react";
 import { ColorModeContext } from "../App";
-import { Link } from "react-router-dom";
 import AllPost from "../components/AllPost";
 import { fakeData } from "./Home";
 import Subscribe from "../components/Subscribe";
