@@ -38,6 +38,9 @@ const MenuItem = ({ toggleColorMode, mode, handleClose }: Mode) => {
       <Link to='/newsletter' onClick={handleClose}>
         Newsletter
       </Link>
+      <Link to='/login' onClick={handleClose}>
+        Login
+      </Link>
       <Box
         sx={{
           marginTop: "30px",

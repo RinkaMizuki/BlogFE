@@ -1,5 +1,5 @@
-import { Box, Button } from "@mui/material";
-import { useContext } from "react";
+import { Box } from "@mui/material";
+import { useContext, useState } from "react";
 import { ColorModeContext } from "../App";
 import image1 from "../assets/images/Image1.png";
 import image2 from "../assets/images/Image2.png";
@@ -8,6 +8,7 @@ import image4 from "../assets/images/Image4.png";
 import image5 from "../assets/images/Image5.png";
 import AllPost from "../components/AllPost";
 import RecentPost from "../components/RecentPost";
+import Pagination from "../components/Pagination/Pagination";
 
 export const fakeData = [
   {
@@ -40,6 +41,12 @@ export const fakeData = [
 const Home = () => {
 
   const { mode } = useContext(ColorModeContext)
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10; // Số lượng trang tổng cộng
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="flex justify-center items-center flex-col m-body">
@@ -54,55 +61,9 @@ const Home = () => {
       <RecentPost fakeData={fakeData} />
       <AllPost fakeData={fakeData} />
       <Box className="flex justify-between w-full mt-6 max-md:flex-col max-md:justify-center max-md:items-center">
-        <Button sx={{
-          display: "flex",
-          gap: "10px",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0"
-        }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-            <path d="M15.8334 10.4998H4.16669M4.16669 10.4998L10 16.3332M4.16669 10.4998L10 4.6665" stroke="#b0b0b0" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="text-[#b0b0b0]">Previous</span>
-        </Button>
-        <div className="flex">
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px] bg-[#F9F5FF]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">1</span>
-          </Button>
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">2</span>
-          </Button>
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">3</span>
-          </Button>
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">...</span>
-          </Button>
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">8</span>
-          </Button>
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">9</span>
-          </Button>
-          <Button className="flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px]">
-            <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">10</span>
-          </Button>
-        </div>
-        <Button sx={{
-          display: "flex",
-          gap: "10px",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0"
-        }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-            <path d="M4.16666 10.4998H15.8333M15.8333 10.4998L9.99999 4.6665M15.8333 10.4998L9.99999 16.3332" stroke="#b0b0b0" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="text-[#b0b0b0]">Next</span>
-        </Button>
-      </Box>
-    </div>
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+      </Box >
+    </div >
   )
 };
 

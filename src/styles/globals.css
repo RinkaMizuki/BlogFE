@@ -141,6 +141,7 @@ a {
 body {
   font-family: "Inter" !important;
   overflow-x: hidden;
+  height: 100vh;
 }
 
 ::placeholder {
@@ -158,5 +159,5 @@ body {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 15px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(187, 187, 187);
 }

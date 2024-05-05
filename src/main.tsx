@@ -22,6 +22,22 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: routes.login.path,
+        element: (
+          <DefaultLayout>
+            <routes.login.element />
+          </DefaultLayout>
+        )
+      },
+      {
+        path: routes.register.path,
+        element: (
+          <DefaultLayout>
+            <routes.register.element />
+          </DefaultLayout>
+        )
+      },
+      {
         path: routes.newsletter.path,
         element: (
           <DefaultLayout>

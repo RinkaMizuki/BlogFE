@@ -1,11 +1,19 @@
 import { default as config } from "../config/config";
-import { About, Detail, Home, Notfound } from "../pages";
+import { About, Detail, Home, Login, Notfound, Register } from "../pages";
 import { Newsletter } from "../pages";
 
 const routes = {
   home: {
     path: config.home,
     element: Home,
+  },
+  login: {
+    path: config.login,
+    element: Login
+  },
+  register: {
+    path: config.register,
+    element: Register
   },
   newsletter: {
     path: config.newsletter,
