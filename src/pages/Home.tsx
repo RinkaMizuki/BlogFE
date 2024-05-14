@@ -60,7 +60,7 @@ const Home = () => {
       </Box>
       <RecentPost fakeData={fakeData} />
       <AllPost fakeData={fakeData} />
-      <Box className="flex justify-between w-full mt-6 max-md:flex-col max-md:justify-center max-md:items-center">
+      <Box className="flex justify-between w-full mt-6 max-md:flex-col max-md:justify-center max-md:items-center max-md:gap-3">
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </Box >
     </div >

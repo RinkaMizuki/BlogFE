@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
-import { useState } from 'react';
+import { Button, useMediaQuery, useTheme } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 interface Props {
   currentPage: number;
@@ -8,11 +8,17 @@ interface Props {
 }
 
 const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
-  const [pagesToShow] = useState(3); // Số lượng trang hiển thị
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
+  const [pagesToShow, setPagesToShow] = useState(isMatch ? 3 : 5); // Số lượng trang hiển thị
 
   const handleClick = (pageNumber: number) => {
     onPageChange(pageNumber);
   };
+
+  useEffect(() => {
+    setPagesToShow(isMatch ? 3 : 5);
+  }, [isMatch])
 
   const renderPages = () => {
     const pages = [];
@@ -34,7 +40,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
       pages.push(
         <Button
           key={i}
-          className={`flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px] bg-[#F9F5FF] ${i === currentPage ? 'text-white bg-[#90caf9]' : ''}`}
+          className={`flex min-w-0 w-10 h-10 justify-center items-center rounded-[8px] bg-[#F9F5FF] ${i === currentPage ? 'text-white !bg-[#7bc3ff]' : ''}`}
           onClick={() => handleClick(i)}
         >
           <span className="flex w-10 p-3 justify-center items-center flex-shrink-0 self-stretch">{i}</span>
