@@ -1,10 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { ColorModeContext } from "../App";
 import { Link, useNavigate } from "react-router-dom";
 import blogLogo from "../assets/images/blogger.png";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { registerUser } from "../redux/auth/authAction";
 import LoadingBtn from "../components/LoadingBtn/LoadingBtn";
+import { ToastOptions, toast } from "react-toastify";
+import { emailValidation, passwordValidation, phoneValidation } from "../regex";
+import 'react-toastify/dist/ReactToastify.css';
+import ValidateError from "../components/ValidateError/ValidateError";
+import Button from "../components/Button";
 
 interface RegisterData {
   username: string,
@@ -13,8 +18,24 @@ interface RegisterData {
   phone: string,
   confirmPassword?: string,
 }
+export const toastOptions = {
+  position: "top-right",
+  autoClose: 2000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+} as ToastOptions;
 
 const Register = () => {
+
+  const userNameErrorRef = useRef<HTMLSpanElement>(null);
+  const emailErrorRef = useRef<HTMLSpanElement>(null);
+  const phoneErrorRef = useRef<HTMLSpanElement>(null);
+  const passwordErrorRef = useRef<HTMLSpanElement>(null);
+  const confirmPasswordErrorRef = useRef<HTMLSpanElement>(null);
 
   const { mode } = useContext(ColorModeContext);
 
@@ -30,13 +51,92 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const passwordValidate = () => {
+    const isValidPassword: boolean = passwordValidation(userInfo.password);
+    const isMatchesPassword: boolean = userInfo.password === userInfo.confirmPassword;
+    if (confirmPasswordErrorRef.current) {
+      if (!isMatchesPassword && isValidPassword) {
+        confirmPasswordErrorRef.current.innerHTML = "Confirm password does not match.";
+      }
+      else {
+        confirmPasswordErrorRef.current.innerHTML = "";
+      }
+    }
+    if (passwordErrorRef.current) {
+      if (!userInfo.password) {
+        passwordErrorRef.current.innerHTML = "Password field require."
+        return
+      }
+      if (!isValidPassword) {
+        passwordErrorRef.current.innerHTML = "Password incorrect format."
+      } else {
+        passwordErrorRef.current.innerHTML = ""
+      }
+    }
+    return isValidPassword && isMatchesPassword && userInfo.password;
+  }
+
+  const emailValidate = () => {
+    const isValidEmail: boolean = emailValidation(userInfo.email);
+    if (emailErrorRef.current) {
+      if (!userInfo.email) {
+        emailErrorRef.current.innerHTML = "Email field require."
+      }
+      else if (!isValidEmail && userInfo.email) {
+        emailErrorRef.current.innerHTML = "Email incorrect format."
+      }
+      else {
+        emailErrorRef.current.innerHTML = ""
+      }
+    }
+    return isValidEmail && userInfo.email
+  }
+
+  const phoneValidate = () => {
+    const isValidPhone: boolean = phoneValidation(userInfo.phone);
+    if (phoneErrorRef.current) {
+      if (!userInfo.phone) {
+        phoneErrorRef.current.innerHTML = "Phone field require."
+      }
+      else if (!isValidPhone && userInfo.phone) {
+        phoneErrorRef.current.innerHTML = "Phone incorrect format."
+      }
+      else {
+        phoneErrorRef.current.innerHTML = ""
+      }
+    }
+    return isValidPhone && userInfo.phone
+  }
+
+  const usernameValidate = () => {
+    if (userNameErrorRef.current) {
+      if (!userInfo.username) {
+        userNameErrorRef.current.innerHTML = "Username field require."
+      }
+      else {
+        userNameErrorRef.current.innerHTML = ""
+      }
+    }
+    return !!userInfo.username;
+  }
+
   const handleRegisterUser = async () => {
-    if (userInfo.password !== userInfo.confirmPassword) {
+    const isUsernameValid = usernameValidate();
+    const isEmailValid = emailValidate();
+    const isPhoneNumber = phoneValidate();
+    const isPasswordValid = passwordValidate();
+    if (!isUsernameValid || !isEmailValid || !isPhoneNumber || !isPasswordValid) {
       return
     }
-    delete userInfo['confirmPassword'];
-    dispatch(registerUser(userInfo)).then(() => {
+    const data = {
+      username: userInfo.username,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      password: userInfo.password
+    }
+    dispatch(registerUser(data)).then((res) => {
       navigate('/login')
+      toast.info(res.payload?.message, toastOptions);
     });
   }
 
@@ -60,69 +160,87 @@ const Register = () => {
               <label htmlFor="username" className={`block text-sm font-medium leading-6 ${mode !== 'light' ? "text-[#ffffff]" : "text-[#090D1F]"}`}>
                 User name
               </label>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
-                  onChange={(e: any & { target: HTMLInputElement }) => setUserInfo(prevInfo => {
-                    return {
-                      ...prevInfo,
-                      username: e.target.value,
+                  onChange={(e: any & { target: HTMLInputElement }) => {
+                    if (userNameErrorRef?.current) {
+                      userNameErrorRef.current.innerHTML = ""
                     }
-                  })}
+                    setUserInfo(prevInfo => {
+                      return {
+                        ...prevInfo,
+                        username: e.target.value,
+                      }
+                    })
+                  }}
                   value={userInfo.username}
                   id="username"
                   name="username"
                   type="username"
-                  placeholder="Enter your username"
+                  placeholder="Ex: abc"
                   autoComplete="username"
                   required
                   className="px-2 block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-zinc-200 border-solid outline-none focus:border-2 focus:border-solid focus:border-[#4f46e5]"
                 />
+                <ValidateError ref={userNameErrorRef} />
               </div>
             </div>
             <div>
               <label htmlFor="email" className={`block text-sm font-medium leading-6 ${mode !== 'light' ? "text-[#ffffff]" : "text-[#090D1F]"}`}>
                 Email address
               </label>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
-                  onChange={(e: any & { target: HTMLInputElement }) => setUserInfo(prevInfo => {
-                    return {
-                      ...prevInfo,
-                      email: e.target.value,
+                  onChange={(e: any & { target: HTMLInputElement }) => {
+                    if (emailErrorRef.current) {
+                      emailErrorRef.current.innerHTML = ""
                     }
-                  })}
+                    setUserInfo(prevInfo => {
+                      return {
+                        ...prevInfo,
+                        email: e.target.value,
+                      }
+                    })
+                  }}
                   id="email"
                   name="email"
                   type="email"
                   value={userInfo.email}
-                  placeholder="Enter your email"
+                  placeholder="Ex: blog@gmail.com"
                   autoComplete="email"
                   required
                   className="px-2 block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-zinc-200 border-solid outline-none focus:border-2 focus:border-solid focus:border-[#4f46e5]"
                 />
+                <ValidateError ref={emailErrorRef}></ValidateError>
               </div>
             </div>
             <div>
               <label htmlFor="phone" className={`block text-sm font-medium leading-6 ${mode !== 'light' ? "text-[#ffffff]" : "text-[#090D1F]"}`}>
                 Phone number
               </label>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
-                  onChange={(e: any & { target: HTMLInputElement }) => setUserInfo(prevInfo => {
-                    return {
-                      ...prevInfo,
-                      phone: e.target.value,
+                  onChange={(e: any & { target: HTMLInputElement }) => {
+                    if (phoneErrorRef.current) {
+                      phoneErrorRef.current.innerHTML = "";
                     }
-                  })}
+                    setUserInfo(prevInfo => {
+                      return {
+                        ...prevInfo,
+                        phone: e.target.value,
+                      }
+                    })
+                  }}
                   value={userInfo.phone}
                   id="phone"
                   name="phone"
                   type="text"
-                  placeholder="Enter your phone"
+                  placeholder="Ex: 0867706538"
                   autoComplete="phone"
                   required
                   className="px-2 block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-zinc-200 border-solid outline-none focus:border-2 focus:border-solid focus:border-[#4f46e5]"
                 />
+                <ValidateError ref={phoneErrorRef} />
               </div>
             </div>
             <div>
@@ -131,23 +249,30 @@ const Register = () => {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
-                  onChange={(e: any & { target: HTMLInputElement }) => setUserInfo(prevInfo => {
-                    return {
-                      ...prevInfo,
-                      password: e.target.value,
+                  onChange={(e: any & { target: HTMLInputElement }) => {
+                    if (passwordErrorRef.current) {
+                      passwordErrorRef.current.innerHTML = ""
                     }
-                  })}
+                    setUserInfo(prevInfo => {
+                      return {
+                        ...prevInfo,
+                        password: e.target.value,
+                      }
+                    })
+                  }
+                  }
                   value={userInfo.password}
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Ex: Ab123@"
                   autoComplete="current-password"
                   required
                   className="px-2 block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-zinc-200 border-solid outline-none focus:border-2 focus:border-solid focus:border-[#4f46e5]"
                 />
+                <ValidateError ref={passwordErrorRef} />
               </div>
             </div>
 
@@ -157,40 +282,43 @@ const Register = () => {
                   Confirm password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
-                  onChange={(e: any & { target: HTMLInputElement }) => setUserInfo(prevInfo => {
-                    return {
-                      ...prevInfo,
-                      confirmPassword: e.target.value,
+                  onChange={(e: any & { target: HTMLInputElement }) => {
+                    if (confirmPasswordErrorRef.current) {
+                      confirmPasswordErrorRef.current.innerHTML = ""
                     }
-                  })}
+                    setUserInfo(prevInfo => {
+                      return {
+                        ...prevInfo,
+                        confirmPassword: e.target.value,
+                      }
+                    })
+                  }}
                   value={userInfo.confirmPassword}
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  placeholder="Enter your confirm password"
+                  placeholder="Ex: Ab123@"
                   autoComplete="confirm-password"
                   required
                   className="px-2 block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 border-zinc-200 border-solid outline-none focus:border-2 focus:border-solid focus:border-[#4f46e5]"
                 />
+                <ValidateError ref={confirmPasswordErrorRef} />
               </div>
             </div>
-
             <div>
-              {!loading ? <button
+              {!loading ? <Button
                 onClick={handleRegisterUser}
-                type="button"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 border-none"
               >
                 Register
-              </button> :
+              </Button> :
                 <LoadingBtn />
               }
             </div>
             <div className="text-sm flex justify-center items-center flex-col gap-2">
               <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Do you already have an account? <span className="underline">Login</span>
+                Do you already have an account? <span className="underline text-white">Login</span>
               </Link>
               <Link to="/forgot-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Forgot password?

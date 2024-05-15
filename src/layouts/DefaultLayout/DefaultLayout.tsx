@@ -6,7 +6,9 @@ const DefaultLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="h-full">
       <Header />
-      {children}
+      <div className="min-h-screen">
+        {children}
+      </div>
       <Footer />
     </div>
   )

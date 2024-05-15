@@ -1,3 +1,4 @@
+import AuthRequire from "../HOC/AuthRequire";
 import { default as config } from "../config/config";
 import { About, Detail, Home, Login, Notfound, Register } from "../pages";
 import { Newsletter } from "../pages";
@@ -17,7 +18,7 @@ const routes = {
   },
   newsletter: {
     path: config.newsletter,
-    element: Newsletter,
+    element: AuthRequire(Newsletter),
   },
   about: {
     path: config.about,

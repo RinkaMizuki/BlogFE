@@ -1,9 +1,10 @@
-import { Box, Button, Modal, useMediaQuery, useTheme } from "@mui/material";
+import { Avatar, Box, Button, Modal, useMediaQuery, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useLocation } from "react-router-dom";
 import { ColorModeContext } from "../../App";
 import { MenuItem } from "./index";
+import { useAppSelector } from "../../hooks";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,6 +28,7 @@ const Header = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const userLogin = useAppSelector(state => state.auth?.userInfo?.user);
   const location = useLocation();
 
   return (
@@ -56,7 +58,9 @@ const Header = () => {
             <Link to="/projects" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full ${location.pathname === '/projects' ? 'after:w-full' : ''}`}>Projects</Link>
             <Link to="/about" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full  ${location.pathname === '/about' ? 'after:w-full' : ''}`}>About</Link>
             <Link to="/newsletter" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full ${location.pathname === '/newsletter' ? 'after:w-full' : ''}`}>Newsletter</Link>
-            <Link to="/login" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full ${location.pathname === '/login' ? 'after:w-full' : ''}`}>Login</Link>
+            {!userLogin ? <Link to="/login" className={`relative text-link ${mode === 'light' ? "after:bg-[#090D1F]" : "after:bg-[#ffffff]"} after:absolute after:content-['']  after:w-0 after:left-0 after:bottom-[-5px] after:h-1 after:block after:transition-all after:ease-in-out after:duration-200 hover:after:w-full ${location.pathname === '/login' ? 'after:w-full' : ''}`}>Login</Link> : <Avatar alt={userLogin.url} src={userLogin.avatar} sx={{
+              cursor: "pointer"
+            }} />}
             <Box
               className="flex p-mode rounded-[29px] gap-3"
               sx={{

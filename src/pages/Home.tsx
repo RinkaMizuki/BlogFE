@@ -9,6 +9,8 @@ import image5 from "../assets/images/Image5.png";
 import AllPost from "../components/AllPost";
 import RecentPost from "../components/RecentPost";
 import Pagination from "../components/Pagination/Pagination";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const fakeData = [
   {
@@ -50,6 +52,7 @@ const Home = () => {
 
   return (
     <div className="flex justify-center items-center flex-col m-body">
+      <ToastContainer></ToastContainer>
       <Box className="flex flex-col justify-center items-center gap-12 w-full" sx={{
         borderTopWidth: "1px",
         borderBottomWidth: "1px",
