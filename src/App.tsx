@@ -24,6 +24,10 @@ function App() {
 
   const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
+      ochre: {
+        light: '#ffffff',
+        dark: '#090D1F',
+      },
       mode,
       ...(mode === 'light'
         ? {

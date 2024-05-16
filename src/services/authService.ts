@@ -11,4 +11,9 @@ const login = async (path: string, data: LoginState, options: AxiosRequestConfig
   return res.data;
 }
 
-export { register, login }
+const logout = async (path: string, options: AxiosRequestConfig) => {
+  const res = await httpRequest.get(path, options);
+  return res.data;
+}
+
+export { register, login, logout }

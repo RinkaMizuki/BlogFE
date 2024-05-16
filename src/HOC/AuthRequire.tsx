@@ -3,9 +3,9 @@ import { useAppSelector } from "../hooks";
 
 const AuthRequire = (OriginComponent: () => JSX.Element) => {
   return function ExtendComponent() {
-    const userLogin = useAppSelector(state => state.auth?.userInfo?.user);
+    const userLogin = useAppSelector(state => state.auth?.userInfo);
 
-    return userLogin ? <Navigate to="/" /> : <OriginComponent />
+    return !userLogin ? <Navigate to="/" /> : <OriginComponent />
   }
 };
 

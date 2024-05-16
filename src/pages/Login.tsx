@@ -17,6 +17,7 @@ const Login = () => {
   const [userLoginInfo, setUserLoginInfo] = useState<LoginState>({
     email: "",
     password: "",
+    remember: true
   });
   const emailErrorRef = useRef<HTMLSpanElement>(null);
   const passwordErrorRef = useRef<HTMLSpanElement>(null);
@@ -60,8 +61,6 @@ const Login = () => {
     }
     dispatch(loginUser(userLoginInfo)).then((res) => {
       if (res.type === "auth/login/fulfilled") {
-        console.log(res);
-
         toast.info(res.payload?.message, toastOptions)
         navigate('/')
         return
@@ -72,6 +71,7 @@ const Login = () => {
 
   return (
     <>
+      <ToastContainer></ToastContainer>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center justify-center">
           <img

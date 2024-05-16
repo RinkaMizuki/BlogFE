@@ -1,54 +1,55 @@
 import { Box } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ColorModeContext } from "../App";
-import image1 from "../assets/images/Image1.png";
-import image2 from "../assets/images/Image2.png";
-import image3 from "../assets/images/Image3.png";
-import image4 from "../assets/images/Image4.png";
-import image5 from "../assets/images/Image5.png";
 import AllPost from "../components/AllPost";
 import RecentPost from "../components/RecentPost";
 import Pagination from "../components/Pagination/Pagination";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { get as getHomePosts } from "../services/postService";
+import { AllPostResponse, Category, Post } from "./types";
+import { UserDetail } from "../types";
+import { useAppDispatch } from "../hooks";
+import { setListRecentPost } from "../redux/post/postSlice";
 
-export const fakeData = [
-  {
-    image: image1,
-    desc: "How do you create compelling presentations that wow your colleagues and impress your managers?",
-    line: 0,
-  },
-  {
-    image: image2,
-    desc: "Linear helps streamline software projects, sprints, tasks, and bug tracking. Here’s how to get.",
-    line: 3,
-  },
-  {
-    image: image3,
-    desc: "The rise of RESTful APIs has been met by a rise in tools for creating, testing, and manag.",
-    line: 3,
-  },
-  {
-    image: image4,
-    desc: "A grid system is a design tool used to arrange content on a webpage. It is a series of vertical and horizontal lines that create a matrix of intersecting points, which can be used to align and organize page elements. Grid systems are used to create a consistent look and feel across a website, and can help to make the layout more visually appealing and easier to navigate.",
-    line: 5,
-  },
-  {
-    image: image5,
-    desc: "Like to know the secrets of transforming a 2-14 team into a 3x Super Bowl winning Dynasty?",
-    line: 2,
-  },
-]
+interface HomePostsType {
+  ALL_BLOG_POSTS: AllPostResponse;
+  ALL_CATEGORIES: Category[];
+  DATA_SEARCH: {
+    categorie: Category[] | [];
+    posts: Post[] | []
+  }
+  RECENT_BLOG_POSTS: Post[] | undefined;
+  USER: UserDetail;
+}
 
 const Home = () => {
 
   const { mode } = useContext(ColorModeContext)
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 10; // Số lượng trang tổng cộng
+  const [currentPage, setCurrentPage] = useState<number>(() => {
+    return +JSON.parse(localStorage.getItem('currPage') || "1")
+  });
+  const [homePosts, setHomePosts] = useState<HomePostsType | null>(null);
+  const dispatch = useAppDispatch();
 
   const handlePageChange = (pageNumber: number) => {
+    localStorage.setItem('currPage', JSON.stringify(pageNumber));
     setCurrentPage(pageNumber);
   };
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      const postData: HomePostsType = await getHomePosts("/home", {
+        params: {
+          keyword: "ad",
+          page: currentPage
+        }
+      })
+      dispatch(setListRecentPost(postData.RECENT_BLOG_POSTS))
+      setHomePosts(postData);
+    }
+    fetchPostData();
+  }, [currentPage])
 
   return (
     <div className="flex justify-center items-center flex-col m-body">
@@ -61,11 +62,11 @@ const Home = () => {
       }}>
         <h1 className="text-title font-semibold letter-spacing leading-none cursor-default select-none">THE BLOG</h1>
       </Box>
-      <RecentPost fakeData={fakeData} />
-      <AllPost fakeData={fakeData} />
+      <RecentPost data={homePosts?.RECENT_BLOG_POSTS} />
+      <AllPost data={homePosts?.ALL_BLOG_POSTS.data} />
       <Box className="flex justify-between w-full mt-6 max-md:flex-col max-md:justify-center max-md:items-center max-md:gap-3">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-      </Box >
+        <Pagination currentPage={currentPage} totalPages={homePosts?.ALL_BLOG_POSTS?.last_page} onPageChange={handlePageChange} />
+      </Box>
     </div >
   )
 };

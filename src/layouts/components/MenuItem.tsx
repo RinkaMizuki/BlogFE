@@ -1,6 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { logoutUser } from "../../redux/auth/authAction";
+import { toast } from "react-toastify";
+import { toastOptions } from "../../pages/Register";
 
 interface Mode {
   toggleColorMode: () => void;
@@ -9,6 +13,17 @@ interface Mode {
 }
 
 const MenuItem = ({ toggleColorMode, mode, handleClose }: Mode) => {
+  const dispatch = useAppDispatch()
+  const userLogin = useAppSelector(state => state.auth.userInfo?.user)
+  const navigate = useNavigate()
+
+  const handleLogoutUser = () => {
+    dispatch(logoutUser(userLogin?.id)).then((res) => {
+      navigate('/')
+      toast.info(res.payload.message, toastOptions)
+    })
+  }
+
   return (
     <Box sx={{
       display: 'flex',
@@ -38,9 +53,19 @@ const MenuItem = ({ toggleColorMode, mode, handleClose }: Mode) => {
       <Link to='/newsletter' onClick={handleClose}>
         Newsletter
       </Link>
-      <Link to='/login' onClick={handleClose}>
+      {!userLogin ? <Link to='/login' onClick={handleClose}>
         Login
-      </Link>
+      </Link> : <div onClick={() => {
+        handleLogoutUser()
+        handleClose()
+      }}
+      >
+        <Box sx={{
+          cursor: 'pointer'
+        }}>
+          <Typography>Logout</Typography>
+        </Box>
+      </div>}
       <Box
         sx={{
           marginTop: "30px",

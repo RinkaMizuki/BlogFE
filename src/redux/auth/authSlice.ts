@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { Error, User } from '../../types';
-import { loginUser, registerUser } from './authAction';
+import { loginUser, logoutUser, registerUser } from './authAction';
 
 // Define a type for the slice state
 interface LoginState {
@@ -46,7 +46,7 @@ export const authSlice = createSlice({
       state.error = null;
     })
     builder.addCase(loginUser.rejected, (state, { payload }) => {
-      state.loading = true;
+      state.loading = false;
       state.error = {
         message: (payload as Error).message,
         statusCode: (payload as Error).statusCode
@@ -57,6 +57,25 @@ export const authSlice = createSlice({
       state.error = null;
       state.success = true;
       state.userInfo = payload
+    })
+    builder.addCase(logoutUser.pending, (state) => {
+      state.loading = true;
+      state.success = false;
+      state.error = null;
+    })
+    builder.addCase(logoutUser.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.success = false;
+      state.userInfo = null;
+      state.error = {
+        message: (payload as Error).message,
+        statusCode: (payload as Error).statusCode
+      };
+    })
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.loading = false;
+      state.userInfo = null;
+      state.success = true;
     })
   }
 })

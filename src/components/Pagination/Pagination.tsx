@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   currentPage: number;
-  totalPages: number;
+  totalPages: number | undefined;
   onPageChange: (page: number) => void;
 }
 
-const Pagination = ({ currentPage, totalPages, onPageChange }: Props) => {
+const Pagination = ({ currentPage, totalPages = 3, onPageChange }: Props) => {
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
   const [pagesToShow, setPagesToShow] = useState(isMatch ? 3 : 5); // Số lượng trang hiển thị
