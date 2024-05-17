@@ -21,7 +21,6 @@ const Profile = () => {
             className="flex-1"
             active={loading}
             spinner={<Loading />}
-            text="Loading..."
           >
             <UserAccountDetail userDetails={userLogin} setLoading={setLoading} />
           </LoadingOverlay>

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ColorModeContext } from "../App";
-import AllPost from "../components/AllPost";
+// import AllPost from "../components/AllPost";
 import Subscribe from "../components/Subscribe";
 
 const Newsletter = () => {

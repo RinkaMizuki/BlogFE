@@ -4,9 +4,6 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 import { Button as ButtonMui } from "@mui/material"
-import {
-  Button
-} from "shards-react";
 import { TextField } from '@mui/material';
 import { forgotPassword } from '../../services/authService';
 import { ChangeEvent, ReactElement, ReactNode, cloneElement, forwardRef, useState } from 'react';
