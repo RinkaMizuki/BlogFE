@@ -115,7 +115,7 @@ const UserAccountDetail = ({ userDetails, setLoading }: { userDetails: UserDetai
                   <Col md="10" className="form-group">
                     <label htmlFor="phone">Number Phone</label>
                     <FormInput
-                      type="phone"
+                      type="text"
                       id="phone"
                       placeholder="Phone"
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +131,7 @@ const UserAccountDetail = ({ userDetails, setLoading }: { userDetails: UserDetai
                     />
                   </Col>
                 </Row>
-                <Button className="mt-4" theme="accent" type="button" onClick={handleUpdateProfile}>Update Account</Button>
+                <Button className="mt-4" theme="secondary" type="button" onClick={handleUpdateProfile}>Update Account</Button>
               </Form>
             </Col>
             <Col md="4" className="flex justify-center items-center flex-col">
@@ -150,7 +150,7 @@ const UserAccountDetail = ({ userDetails, setLoading }: { userDetails: UserDetai
                   </figcaption>
                 </figure>
               </div>
-              <ForgotPassword isOpen={open} handleClose={handleClose} children={<Button theme="accent" type="button" onClick={handleOpen}>Forgot Password</Button>} />
+              <ForgotPassword isOpen={open} handleClose={handleClose} children={<Button theme="secondary" type="button" onClick={handleOpen}>Forgot Password</Button>} />
             </Col>
           </Row>
         </ListGroupItem>

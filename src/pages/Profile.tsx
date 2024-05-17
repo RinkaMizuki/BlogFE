@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "shards-react";
 import { UserAccountDetail } from "../components/Account";
 import { useAppSelector } from "../hooks";
-import LoadingOverlay from 'react-loading-overlay';
+import LoadingOverlay from 'react-loading-overlay-ts';
 import Loading from "./Loading";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -21,8 +21,9 @@ const Profile = () => {
             className="flex-1"
             active={loading}
             spinner={<Loading />}
-            text={<UserAccountDetail userDetails={userLogin} setLoading={setLoading} />}
+            text="Loading..."
           >
+            <UserAccountDetail userDetails={userLogin} setLoading={setLoading} />
           </LoadingOverlay>
         </Col>
         <Col lg="2" className="justify-center items-center flex">
