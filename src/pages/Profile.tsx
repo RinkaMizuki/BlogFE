@@ -21,8 +21,8 @@ const Profile = () => {
             className="flex-1"
             active={loading}
             spinner={<Loading />}
+            text={<UserAccountDetail userDetails={userLogin} setLoading={setLoading} />}
           >
-            <UserAccountDetail userDetails={userLogin} setLoading={setLoading} />
           </LoadingOverlay>
         </Col>
         <Col lg="2" className="justify-center items-center flex">
