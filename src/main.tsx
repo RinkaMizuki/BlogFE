@@ -48,6 +48,22 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: routes.profile.path,
+        element: (
+          <DefaultLayout>
+            <routes.profile.element />
+          </DefaultLayout>
+        )
+      },
+      {
+        path: routes.resetPassword.path,
+        element: (
+          <DefaultLayout>
+            <routes.resetPassword.element />
+          </DefaultLayout>
+        )
+      },
+      {
         path: routes.about.path,
         element: (
           <DefaultLayout>

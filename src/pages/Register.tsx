@@ -10,6 +10,7 @@ import { emailValidation, passwordValidation, phoneValidation } from "../regex";
 import 'react-toastify/dist/ReactToastify.css';
 import ValidateError from "../components/ValidateError/ValidateError";
 import Button from "../components/Button";
+import { ForgotPassword } from "../components/Model";
 
 interface RegisterData {
   username: string,
@@ -30,6 +31,16 @@ export const toastOptions = {
 } as ToastOptions;
 
 const Register = () => {
+  const [userInfo, setUserInfo] = useState<RegisterData>({
+    username: "",
+    password: "",
+    email: "",
+    phone: "",
+    confirmPassword: "",
+  });
+  const [open, setOpen] = useState<boolean>(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   const userNameErrorRef = useRef<HTMLSpanElement>(null);
   const emailErrorRef = useRef<HTMLSpanElement>(null);
@@ -43,13 +54,6 @@ const Register = () => {
   const { loading } = useAppSelector(state => state.auth);
   const navigate = useNavigate();
 
-  const [userInfo, setUserInfo] = useState<RegisterData>({
-    username: "",
-    password: "",
-    email: "",
-    phone: "",
-    confirmPassword: "",
-  });
 
   const passwordValidate = () => {
     const isValidPassword: boolean = passwordValidation(userInfo.password);
@@ -320,13 +324,17 @@ const Register = () => {
               <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Do you already have an account? <span className="underline text-white">Login</span>
               </Link>
-              <Link to="/forgot-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Forgot password?
-              </Link>
+              <ForgotPassword
+                isOpen={open}
+                handleClose={handleClose}
+                children={<div className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={handleOpen}>
+                  Forgot password?
+                </div>}
+              />
             </div>
           </form>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   )
 };

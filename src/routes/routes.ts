@@ -1,7 +1,6 @@
 import AuthRequire from "../HOC/AuthRequire";
 import { default as config } from "../config/config";
-import { About, Detail, Home, Login, Notfound, Register } from "../pages";
-import { Newsletter } from "../pages";
+import { About, Detail, Home, Login, Notfound, Register, Newsletter, Profile, ResetPassword } from "../pages";
 
 const routes = {
   home: {
@@ -23,6 +22,14 @@ const routes = {
   about: {
     path: config.about,
     element: About,
+  },
+  profile: {
+    path: config.profile,
+    element: AuthRequire(Profile),
+  },
+  resetPassword: {
+    path: config.resetPassword,
+    element: ResetPassword,
   },
   detail: {
     path: config.detail,

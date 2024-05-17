@@ -11,6 +11,7 @@ import { loginUser } from "../redux/auth/authAction";
 import { useAppDispatch } from "../hooks";
 import { toastOptions } from "./Register";
 import 'react-toastify/dist/ReactToastify.css';
+import { ForgotPassword } from "../components/Model";
 
 const Login = () => {
 
@@ -19,6 +20,10 @@ const Login = () => {
     password: "",
     remember: true
   });
+  const [open, setOpen] = useState<boolean>(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
+
   const emailErrorRef = useRef<HTMLSpanElement>(null);
   const passwordErrorRef = useRef<HTMLSpanElement>(null);
 
@@ -61,8 +66,11 @@ const Login = () => {
     }
     dispatch(loginUser(userLoginInfo)).then((res) => {
       if (res.type === "auth/login/fulfilled") {
-        toast.info(res.payload?.message, toastOptions)
-        navigate('/')
+        navigate('/', {
+          state: {
+            message: res.payload?.message,
+          }
+        })
         return
       }
       toast.error(res.payload?.message, toastOptions)
@@ -156,9 +164,14 @@ const Login = () => {
               <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Don't have account? <span className="underline text-white ">Signup</span>
               </Link>
-              <Link to="/forgot-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Forgot password?
-              </Link>
+              <ForgotPassword
+                isOpen={open}
+                handleClose={handleClose}
+                children={<div className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={handleOpen}>
+                  Forgot password?
+                </div>}
+              />
+
             </div>
           </form>
         </div>

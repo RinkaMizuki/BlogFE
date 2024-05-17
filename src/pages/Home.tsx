@@ -4,13 +4,15 @@ import { ColorModeContext } from "../App";
 import AllPost from "../components/AllPost";
 import RecentPost from "../components/RecentPost";
 import Pagination from "../components/Pagination/Pagination";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { get as getHomePosts } from "../services/postService";
 import { AllPostResponse, Category, Post } from "./types";
 import { UserDetail } from "../types";
 import { useAppDispatch } from "../hooks";
 import { setListRecentPost } from "../redux/post/postSlice";
+import { useLocation } from "react-router-dom";
+import { toastOptions } from "./Register";
 
 interface HomePostsType {
   ALL_BLOG_POSTS: AllPostResponse;
@@ -31,6 +33,7 @@ const Home = () => {
   });
   const [homePosts, setHomePosts] = useState<HomePostsType | null>(null);
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const handlePageChange = (pageNumber: number) => {
     localStorage.setItem('currPage', JSON.stringify(pageNumber));
@@ -50,6 +53,14 @@ const Home = () => {
     }
     fetchPostData();
   }, [currentPage])
+
+  useEffect(() => {
+    const message = location.state?.message;
+    if (message) {
+      toast.info(message, toastOptions);
+      window.history.replaceState({}, '')
+    }
+  }, [])
 
   return (
     <div className="flex justify-center items-center flex-col m-body">

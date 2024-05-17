@@ -1,15 +1,31 @@
-import { useState } from "react";
 import { CommentType } from "../types";
+import { UserDetail } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   comment: CommentType;
   isCommentChild?: boolean;
+  userLogin: UserDetail | null;
+  setIdCommentEditShow: (commentId: number) => void;
+  idCommentEditShow: number;
 }
 
-const Comment = ({ comment, isCommentChild = false }: Props) => {
+const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow, setIdCommentEditShow }: Props) => {
 
-  const [idCommentEditShow, setIdCommentEditShow] = useState<number>(0);
-
+  const navigate = useNavigate();
+  const handleAddComment = (commentId: number) => {
+    if (!userLogin) {
+      navigate('/login');
+      return
+    }
+    setIdCommentEditShow(commentId)
+  }
+  const handleLikeComment = () => {
+    if (!userLogin) {
+      navigate('/login');
+      return
+    }
+  }
   return (
     <>
       <div className={`card-body ${isCommentChild ? "ml-10 pt-0" : ""}`}>
@@ -32,11 +48,11 @@ const Comment = ({ comment, isCommentChild = false }: Props) => {
         </p>
 
         <div className="small d-flex justify-content-start">
-          <div className="d-flex align-items-center me-3 cursor-pointer">
+          <div className="d-flex align-items-center me-3 cursor-pointer" onClick={handleLikeComment}>
             <i className="far fa-thumbs-up me-2"></i>
             <p className="mb-0">Like</p>
           </div>
-          <div className="d-flex align-items-center me-3 cursor-pointer" onClick={() => setIdCommentEditShow(comment.id)}>
+          <div className="d-flex align-items-center me-3 cursor-pointer" onClick={() => { handleAddComment(comment.id) }}>
             <i className="far fa-comment-dots me-2"></i>
             <p className="mb-0">Comment</p>
           </div>
@@ -50,7 +66,7 @@ const Comment = ({ comment, isCommentChild = false }: Props) => {
       {comment.id === idCommentEditShow && <div className="card-footer py-3 border-0" style={{ backgroundColor: "#f8f9fa" }}>
         <div className="d-flex flex-start w-100">
           <img className="rounded-circle shadow-1-strong me-3"
-            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+            src={userLogin?.avatar} alt={userLogin?.url} width="40"
             height="40" />
           <div data-mdb-input-init className="form-outline w-100">
             <textarea className="form-control" id="textAreaExample" rows={4}
@@ -69,6 +85,9 @@ const Comment = ({ comment, isCommentChild = false }: Props) => {
       {comment.comments?.length > 0 && comment.comments.map(commentChild => {
         return (
           <Comment
+            idCommentEditShow={idCommentEditShow}
+            setIdCommentEditShow={setIdCommentEditShow}
+            userLogin={userLogin}
             key={commentChild.id}
             isCommentChild={true}
             comment={commentChild}

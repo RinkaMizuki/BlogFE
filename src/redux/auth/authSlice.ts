@@ -22,7 +22,11 @@ export const authSlice = createSlice({
   name: 'login',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    setUserInfo: function (state, action) {
+      state.userInfo = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(registerUser.fulfilled, (state) => {
       state.loading = false;
@@ -80,6 +84,6 @@ export const authSlice = createSlice({
   }
 })
 
-export const { } = authSlice.actions
+export const { setUserInfo } = authSlice.actions
 
 export default authSlice.reducer

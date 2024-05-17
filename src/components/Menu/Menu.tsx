@@ -19,7 +19,7 @@ const Menu = () => {
   const handleLogoutUser = () => {
     dispatch(logoutUser(userId)).then((res) => {
       if (res.type === "auth/logout/fulfilled") {
-        navigate('/')
+        navigate('/login')
         toast.info(res.payload.message, toastOptions)
         return
       }
@@ -39,20 +39,22 @@ const Menu = () => {
       }
     }}>
       <div>
-        <Box sx={{
-          display: "flex",
-          justifyContent: "start",
-          alignItems: "center",
-          gap: "20px",
-          cursor: "pointer"
-        }}>
-          <AccountBoxIcon sx={{
-            marginLeft: "-1px"
-          }} />
-          <Typography sx={{
-            fontSize: "16px"
-          }}>Profile</Typography>
-        </Box>
+        <div onClick={() => { navigate('/profile') }}>
+          <Box sx={{
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "center",
+            gap: "20px",
+            cursor: "pointer"
+          }}>
+            <AccountBoxIcon sx={{
+              marginLeft: "-1px"
+            }} />
+            <Typography sx={{
+              fontSize: "16px"
+            }}>Profile</Typography>
+          </Box>
+        </div>
       </div>
       <div onClick={handleLogoutUser}>
         <Box sx={{

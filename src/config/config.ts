@@ -4,7 +4,9 @@ const configRoutes = {
   about: "/about",
   detail: "/blog/:title",
   login: "/login",
+  resetPassword: "/reset-password",
   register: "/register",
+  profile: "/profile",
   notfound: "*"
 }
 

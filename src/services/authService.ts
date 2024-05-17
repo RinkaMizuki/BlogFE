@@ -1,3 +1,4 @@
+import { ResetPasswordState } from "../pages/ResetPassword";
 import { LoginState, RegisterState } from "../types";
 import { AxiosRequestConfig, httpRequest } from "../utils/httpRequest";
 
@@ -16,4 +17,15 @@ const logout = async (path: string, options: AxiosRequestConfig) => {
   return res.data;
 }
 
-export { register, login, logout }
+const forgotPassword = async (path: string, options: AxiosRequestConfig) => {
+  const res = await httpRequest.get(path, options);
+  return res.data;
+}
+
+const resetPassword = async (path: string, data: ResetPasswordState, options: AxiosRequestConfig) => {
+  const res = await httpRequest.post(path, data, options);
+  return res.data;
+}
+
+
+export { register, login, logout, forgotPassword, resetPassword }
