@@ -18,11 +18,7 @@ const Menu = () => {
 
   const handleLogoutUser = () => {
     dispatch(logoutUser(userId)).then((res) => {
-      if (res.type === "auth/logout/fulfilled") {
-        navigate('/login')
-        toast.info(res.payload.message, toastOptions)
-        return
-      }
+      navigate('/login')
       toast.info(res.payload.message, toastOptions)
     })
   }

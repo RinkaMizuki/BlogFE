@@ -1,6 +1,7 @@
 import { CommentType } from "../types";
 import { UserDetail } from "../../types";
 import { useNavigate } from "react-router-dom";
+import MessageBox from "./MessageBox";
 
 interface Props {
   comment: CommentType;
@@ -26,15 +27,16 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
       return
     }
   }
+
   return (
     <>
       <div className={`card-body ${isCommentChild ? "ml-10 pt-0" : ""}`}>
         <div className="d-flex flex-start align-items-center">
-          <img className="rounded-circle shadow-1-strong me-3"
-            src={comment.user.avatar} alt={comment.user.url} width={`${!isCommentChild ? "60" : "50"}`}
+          <img className="rounded-circle shadow-1-strong me-3 object-cover"
+            src={comment.user?.avatar} alt={comment.user?.url} width={`${!isCommentChild ? "60" : "50"}`}
             height={`${!isCommentChild ? "60" : "50"}`} />
           <div>
-            <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment.user.username}</span>
+            <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment.user?.username}</span>
             <p className={`text-muted small mb-0  ${isCommentChild ? "text-xs" : ""}`}>
               {new Date(comment.created_at).toLocaleString()}
             </p>
@@ -42,8 +44,7 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
         </div>
 
         <p className="mt-3 mb-4 pb-2">
-          {(isCommentChild && comment.comment?.user.id !== comment.user.id) && <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment.comment?.user.username}</span>}
-
+          {(isCommentChild && comment?.user?.id !== comment.parentUser?.id) && <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment?.parentUser?.username}</span>}
           <span> {comment.comment_content}</span>
         </p>
 
@@ -63,24 +64,15 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
         </div>
       </div>
 
-      {comment.id === idCommentEditShow && <div className="card-footer py-3 border-0" style={{ backgroundColor: "#f8f9fa" }}>
-        <div className="d-flex flex-start w-100">
-          <img className="rounded-circle shadow-1-strong me-3"
-            src={userLogin?.avatar} alt={userLogin?.url} width="40"
-            height="40" />
-          <div data-mdb-input-init className="form-outline w-100">
-            <textarea className="form-control" id="textAreaExample" rows={4}
-              style={{
-                background: "#fff"
-              }}></textarea>
-            <label className="form-label" htmlFor="textAreaExample">Message</label>
-          </div>
-        </div>
-        <div className="float-end mt-2 pt-1">
-          <button type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-sm mr-4">Post comment</button>
-          <button type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-outline-primary btn-sm" onClick={() => setIdCommentEditShow(0)}>Cancel</button>
-        </div>
-      </div>}
+      {comment.id === idCommentEditShow
+        && <MessageBox
+          postId={comment.post_id}
+          setIdCommentEditShow={setIdCommentEditShow}
+          userLogin={userLogin}
+          commentId={comment.id}
+          userCurrComment={comment.user}
+        />
+      }
 
       {comment.comments?.length > 0 && comment.comments.map(commentChild => {
         return (

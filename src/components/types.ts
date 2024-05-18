@@ -10,6 +10,7 @@ interface CommentType {
   post_id: number;
   updated_at: string;
   user: UserDetail;
+  parentUser?: UserDetail;
   user_id: number;
   comment?: {
     id: number;
@@ -20,6 +21,7 @@ interface CommentType {
     post_id: number;
     updated_at: string;
     user: UserDetail;
+    parentUser: UserDetail;
     user_id: number;
   }
 }
