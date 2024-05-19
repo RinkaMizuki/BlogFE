@@ -1,7 +1,6 @@
 import { UserDetail } from "../types";
 
 interface CommentType {
-  comments: CommentType[]; // Assuming this is for nested comments
   id: number;
   comment_content: string;
   created_at: string;
@@ -9,21 +8,9 @@ interface CommentType {
   parent_comment_id: number | null;
   post_id: number;
   updated_at: string;
-  user: UserDetail;
-  parentUser?: UserDetail;
+  user_of_comment: UserDetail;
   user_id: number;
-  comment?: {
-    id: number;
-    comment_content: string;
-    created_at: string;
-    like: number;
-    parent_comment_id: number | null;
-    post_id: number;
-    updated_at: string;
-    user: UserDetail;
-    parentUser: UserDetail;
-    user_id: number;
-  }
+  parent_comment: CommentType | null;
 }
 
 export { type CommentType }

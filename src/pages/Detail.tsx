@@ -23,12 +23,17 @@ const Detail = () => {
       behavior: "smooth",
       top: 0
     })
-    const fetchPostByTitle = async () => {
-      const res = await getPostByTitle(`/posts/${params.title}`);
-      setPost(res.post);
+    try {
+      const fetchPostByTitle = async () => {
+        const res = await getPostByTitle(`/posts/${params.title}`);
+        setPost(res.post);
+      }
+      fetchPostByTitle();
+    } catch (error) {
+      console.log(error);
     }
-    fetchPostByTitle();
   }, [params.title])
+  console.log(post);
 
   return (
     <div className="mt-10">

@@ -1,5 +1,3 @@
-import { CommentType } from "../components/types";
-
 interface Post {
   id: number;
   post_title: string;
@@ -13,7 +11,6 @@ interface Post {
   cat_id: number;
   post_thumbnail_public_id: string | null;
   cat_title: string;
-  comments: CommentType[];
 }
 
 interface Link {

@@ -33,10 +33,10 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
       <div className={`card-body ${isCommentChild ? "ml-10 pt-0" : ""}`}>
         <div className="d-flex flex-start align-items-center">
           <img className="rounded-circle shadow-1-strong me-3 object-cover"
-            src={comment.user?.avatar} alt={comment.user?.url} width={`${!isCommentChild ? "60" : "50"}`}
+            src={comment.user_of_comment?.avatar} alt={comment.user_of_comment?.url} width={`${!isCommentChild ? "60" : "50"}`}
             height={`${!isCommentChild ? "60" : "50"}`} />
           <div>
-            <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment.user?.username}</span>
+            <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment.user_of_comment?.username}</span>
             <p className={`text-muted small mb-0  ${isCommentChild ? "text-xs" : ""}`}>
               {new Date(comment.created_at).toLocaleString()}
             </p>
@@ -44,7 +44,7 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
         </div>
 
         <p className="mt-3 mb-4 pb-2">
-          {(isCommentChild && comment?.user?.id !== comment.parentUser?.id) && <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment?.parentUser?.username}</span>}
+          {(isCommentChild && comment?.user_of_comment?.id !== comment.parent_comment?.id) && <span className={`fw-bold text-primary mb-1 ${isCommentChild ? "text-sm" : ""}`}>{comment?.parent_comment?.user_of_comment.username}</span>}
           <span> {comment.comment_content}</span>
         </p>
 
@@ -70,22 +70,10 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
           setIdCommentEditShow={setIdCommentEditShow}
           userLogin={userLogin}
           commentId={comment.id}
-          userCurrComment={comment.user}
+          userCurrComment={comment.user_of_comment}
         />
       }
 
-      {comment.comments?.length > 0 && comment.comments.map(commentChild => {
-        return (
-          <Comment
-            idCommentEditShow={idCommentEditShow}
-            setIdCommentEditShow={setIdCommentEditShow}
-            userLogin={userLogin}
-            key={commentChild.id}
-            isCommentChild={true}
-            comment={commentChild}
-          />
-        )
-      })}
     </>
   )
 };
