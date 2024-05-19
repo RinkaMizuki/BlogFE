@@ -17,18 +17,15 @@ const Detail = () => {
   const matches = useMediaQuery(theme.breakpoints.down('md'));
   const params = useParams();
   const listRecentPost = useAppSelector(state => state.blog.post);
+  const [toggleAddCommentId, setToggleAddCommentId] = useState<number>(0);
 
   useEffect(() => {
-    window.scrollTo({
-      behavior: "smooth",
-      top: 0
-    })
     const fetchPostByTitle = async () => {
       const res = await getPostByTitle(`/posts/${params.title}`);
       setPost(res.post);
     }
     fetchPostByTitle();
-  }, [params.title])
+  }, [params.title, toggleAddCommentId])
 
   return (
     <div className="mt-10">
@@ -41,6 +38,7 @@ const Detail = () => {
         <Grid
           md={4}
           sm={12}
+          alignContent="flex-start"
           container
           spacing={4}
           sx={{
@@ -57,7 +55,7 @@ const Detail = () => {
           ))}
         </Grid>
         <Grid md={8} sm={12}>
-          <Post data={post} />
+          <Post data={post} setToggleAddCommentId={setToggleAddCommentId} toggleAddCommentId={toggleAddCommentId} />
           <Box sx={{
             display: "flex",
             flexDirection: "column",

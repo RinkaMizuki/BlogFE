@@ -10,7 +10,12 @@ export default defineConfig({
       '@mui/material/Tooltip'
     ],
   },
-  plugins: [react()],
+  plugins: [react({
+    jsxImportSource: '@emotion/react',
+    babel: {
+      plugins: ['@emotion/babel-plugin'],
+    },
+  })],
   server: {
     open: true,
     port: 5183,

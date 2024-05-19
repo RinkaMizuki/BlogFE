@@ -1,36 +1,53 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, useRef, useState } from "react";
 import { UserDetail } from "../../types";
 import { post as postComment } from "../../services/postService";
+import { CommentDetail } from "../types";
 
 interface Props {
   userLogin: UserDetail | null
   setIdCommentEditShow: (commentId: number) => void;
   commentId?: number;
-  userCurrComment: UserDetail | null,
-  postId: number | null
+  userCurrComment: UserDetail | null;
+  postId: number | null;
+  setToggleAddCommentId: Dispatch<React.SetStateAction<number>>;
+  isReply?: boolean;
 }
 
-const MessageBox = ({ setIdCommentEditShow, userLogin, commentId, userCurrComment, postId }: Props) => {
+const MessageBox = ({ setIdCommentEditShow, userLogin, commentId, postId, setToggleAddCommentId, isReply = true }: Props) => {
 
-  const userNameRef = useRef<HTMLSpanElement>(null)
   const messageBoxRef = useRef<HTMLTextAreaElement>(null)
   const [message, setMessage] = useState<string>("");
 
   const handlePostComment = async () => {
     try {
-      await postComment(`/posts/${postId}/${commentId}/reply-comment`, {
-        comment_content: message
-      })
+      let comment
+      if (isReply) {
+        const { comment: replyComment }: { comment: CommentDetail } = await postComment(`/posts/${postId}/${commentId}/reply-comment`, {
+          comment_content: message
+        })
+        comment = replyComment;
+      } else {
+        const { comment: upComment }: { comment: CommentDetail } = await postComment(`/posts/${postId}/up-comment`, {
+          comment_content: message
+        })
+        comment = upComment;
+      }
+
+      if (comment) {
+        setToggleAddCommentId(comment.id)
+      }
       setIdCommentEditShow(0)
     } catch (error) {
       console.log(error);
+    } finally {
+      setMessage("")
     }
   }
 
   return (
-    <div className="card-footer py-3 border-0" style={{ backgroundColor: "#f8f9fa" }}>
+    <div className="card-footer py-3 border-0 flex-1" style={{ backgroundColor: "#f8f9fa" }}>
       <div className="d-flex flex-start w-100">
-        <img className="rounded-circle shadow-1-strong me-3 object-cover" src={userLogin?.avatar} alt={userLogin?.url} width="40" height="40" />
+        <img className="rounded-circle shadow-1-strong me-3 object-cover flex-none" src={userLogin?.avatar} alt={userLogin?.url} width="40" height="40" />
         <div data-mdb-input-init="" className="form-outline w-100 relative" data-mdb-input-initialized="true">
           <textarea
             className="form-control active"
@@ -40,7 +57,7 @@ const MessageBox = ({ setIdCommentEditShow, userLogin, commentId, userCurrCommen
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
             value={message}
           ></textarea>
-          <span className="fw-bold text-primary absolute top-1 left-1" ref={userNameRef}>{userCurrComment?.username}</span>
+          {/* <span className="fw-bold text-primary absolute top-1 left-1" ref={userNameRef}>{userCurrComment?.username}</span> */}
           <label className="form-label" htmlFor="textAreaExample" style={{
             marginLeft: "0px"
           }}>Message</label>
