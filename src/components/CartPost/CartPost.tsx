@@ -48,8 +48,10 @@ const CartPost = ({ wrap = "nowrap", image, desc, line, isRow = false, isLg = fa
               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <p className={`text-[${mode === 'light' ? "#667085" : "#C0C5D0"}] text-base font-normal ${wrap === "wrap" && `max-h-[245px] line-clamp-${line}`}`}>
-            {desc}
+          <p className={`text-[${mode === 'light' ? "#667085" : "#C0C5D0"}] text-base text-ellipsis overflow-hidden text-nowrap max-w-[450px] line-clamp-5 font-normal ${wrap === "wrap" && `max-h-[245px] line-clamp-${line}`}`} dangerouslySetInnerHTML={{
+            __html: desc ? desc : ""
+          }}>
+
           </p>
         </Link>
         <div className="flex items-center gap-2 text-base mt-4">

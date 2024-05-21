@@ -1,6 +1,6 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ColorModeContext } from "../App";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import blogLogo from "../assets/images/blogger.png";
 import { ToastContainer, toast } from "react-toastify";
 import ValidateError from "../components/ValidateError/ValidateError";
@@ -29,6 +29,7 @@ const Login = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { mode } = useContext(ColorModeContext);
   const emailValidate = () => {
     const isValidEmail: boolean = emailValidation(userLoginInfo.email);
@@ -76,6 +77,14 @@ const Login = () => {
       toast.error(res.payload?.message, toastOptions)
     })
   }
+
+  useEffect(() => {
+    const message = location.state?.message;
+    if (message) {
+      toast.info(message, toastOptions);
+      window.history.replaceState({}, '')
+    }
+  }, [])
 
   return (
     <>

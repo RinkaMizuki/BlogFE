@@ -3,8 +3,6 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Box, FormControlLabel, Switch, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutUser } from '../../redux/auth/authAction';
-import { toast } from 'react-toastify';
-import { toastOptions } from '../../pages/Register';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ColorModeContext } from '../../App';
@@ -18,8 +16,11 @@ const Menu = () => {
 
   const handleLogoutUser = () => {
     dispatch(logoutUser(userId)).then((res) => {
-      navigate('/login')
-      toast.info(res.payload.message, toastOptions)
+      navigate('/login', {
+        state: {
+          message: res.payload.message
+        }
+      })
     })
   }
 

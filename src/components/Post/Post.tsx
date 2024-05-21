@@ -32,10 +32,12 @@ const Post = ({ data, setToggleAddCommentId, toggleAddCommentId }: Props) => {
   if (!data) return "Loading..."
   return (
     <Box>
-      <span>{new Intl.DateTimeFormat('en-GB', options).format(new Date(data.created_at))}</span>
-      <h1>{data.post_title}</h1>
-      <div>
-        {data.post_content}
+      <span className="text-[#6941c6]">{new Intl.DateTimeFormat('en-GB', options).format(new Date(data.created_at))}</span>
+      <h1 className="font-semibold text-3xl my-3">{data.post_title}</h1>
+      <div dangerouslySetInnerHTML={{
+        __html: data.post_content
+      }}>
+
       </div>
       <section style={{
         backgroundColor: "#eee",

@@ -36,8 +36,9 @@ const Detail = () => {
         columnSpacing={{ lg: 8, md: 16 }}
       >
         <Grid
-          md={4}
+          md={6}
           sm={12}
+          lg={4}
           alignContent="flex-start"
           container
           spacing={4}
@@ -54,7 +55,7 @@ const Detail = () => {
             </Grid>
           ))}
         </Grid>
-        <Grid md={8} sm={12}>
+        <Grid md={6} sm={12} lg={8}>
           <Post data={post} setToggleAddCommentId={setToggleAddCommentId} toggleAddCommentId={toggleAddCommentId} />
           <Box sx={{
             display: "flex",
