@@ -31,6 +31,7 @@ const Comment = ({ comment, isCommentChild = false, userLogin, idCommentEditShow
     setIdCommentEditShow(commentId)
   }
   const handleLikeComment = async () => {
+
     if (!userLogin) {
       navigate('/login');
       return

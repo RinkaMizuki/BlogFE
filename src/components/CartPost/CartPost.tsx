@@ -24,9 +24,7 @@ const CartPost = ({ wrap = "nowrap", image, desc, line, isRow = false, isLg = fa
   const { mode } = useContext(ColorModeContext);
 
   return (
-    <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }} direction={isRow ? "row" : "column"} sx={{
-      maxWidth: '100%'
-    }}>
+    <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }} direction={isRow ? "row" : "column"}>
       <Grid sx={{
         overflow: "hidden",
         maxWidth: "100%",

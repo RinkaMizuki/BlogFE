@@ -33,11 +33,11 @@ const Detail = () => {
         marginX="5vw"
         container
         direction={`${!matches ? "row" : "column-reverse"}`}
-        columnSpacing={{ lg: 8, md: 16 }}
+        columnSpacing={{ lg: 8, md: 6 }}
       >
         <Grid
-          md={6}
-          sm={12}
+          xs={12}
+          md={4}
           lg={4}
           alignContent="flex-start"
           container
@@ -55,7 +55,7 @@ const Detail = () => {
             </Grid>
           ))}
         </Grid>
-        <Grid md={6} sm={12} lg={8}>
+        <Grid xs={12} md={8} lg={8}>
           <Post data={post} setToggleAddCommentId={setToggleAddCommentId} toggleAddCommentId={toggleAddCommentId} />
           <Box sx={{
             display: "flex",
