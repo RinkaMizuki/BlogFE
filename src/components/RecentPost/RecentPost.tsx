@@ -11,8 +11,12 @@ const RecentPost = ({ data }: Props) => {
   return (
     data?.length ? <section className="flex flex-col items-center gap-12 self-stretch mt-8">
       <h1 className="text-2xl font-medium self-start">Recent blog posts</h1>
-      <Grid container direction="column" rowSpacing={{ xs: 3, sm: 3, md: 5 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid container direction="row">
+      <Grid container direction="column" rowSpacing={{ xs: 3, sm: 3, md: 5 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{
+        maxWidth: "100%"
+      }}>
+        <Grid container direction="row" sx={{
+          maxWidth: "100%"
+        }}>
           <Grid lg={6} md={12}>
             <CartPost image={data[0].post_thumbnail} desc={data[0].post_content} line={3} cate={data[0].cat_title} title={data[0].post_title} url={data[0].url} date={data[0].created_at} />
           </Grid>
