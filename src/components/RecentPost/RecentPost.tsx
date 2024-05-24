@@ -38,12 +38,12 @@ const RecentPost = ({ data }: Props) => {
           </Grid>
         </Grid>
         <Grid md={12} sx={{
-          width: "100%"
+          maxWidth: "100%"
         }}>
           <CartPost wrap="wrap" image={data[3].post_thumbnail} desc={data[3].post_content} line={3} isRow={true} isLg={true} className="max-h-[250px]" cate={data[3].cat_title} title={data[3].post_title} url={data[3].url} date={data[3].created_at} />
         </Grid>
       </Grid>
-    </section> : <></>
+    </section > : <></>
   )
 };
 
