@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -41,6 +41,22 @@ const MenuItem = ({ toggleColorMode, mode, handleClose }: Mode) => {
         cursor: 'pointer',
         marginBottom: "20px"
       }}>Group H</Typography>
+      {userLogin ?
+        <div onClick={() => {
+          handleClose();
+          navigate('/profile')
+        }}>
+          <Avatar
+            alt={userLogin.url}
+            src={userLogin.avatar}
+            sx={{
+              width: "70px",
+              height: "70px",
+              cursor: "pointer"
+            }} />
+
+        </div>
+        : <></>}
       <Link to='/' onClick={handleClose}>
         Blog
       </Link>
@@ -152,7 +168,7 @@ const MenuItem = ({ toggleColorMode, mode, handleClose }: Mode) => {
       </Box>
       <Button
         sx={{
-          marginTop: "150px"
+          marginTop: "60px"
         }}
         onClick={handleClose}
       >
