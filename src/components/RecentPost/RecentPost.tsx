@@ -17,19 +17,29 @@ const RecentPost = ({ data }: Props) => {
         <Grid container direction="row" sx={{
           maxWidth: "100%"
         }}>
-          <Grid lg={6} md={12}>
+          <Grid lg={6} md={12} sx={{
+            width: "100%"
+          }}>
             <CartPost image={data[0].post_thumbnail} desc={data[0].post_content} line={3} cate={data[0].cat_title} title={data[0].post_title} url={data[0].url} date={data[0].created_at} />
           </Grid>
-          <Grid lg={6} direction="column" md={12}>
-            <Grid lg={6} md={12} marginBottom={1}>
+          <Grid lg={6} direction="column" md={12} sx={{
+            width: "100%"
+          }}>
+            <Grid lg={6} md={12} marginBottom={1} sx={{
+              width: "100%"
+            }}>
               <CartPost wrap="wrap" image={data[1].post_thumbnail} desc={data[1].post_content} line={3} isRow={true} cate={data[1].cat_title} title={data[1].post_title} url={data[1].url} date={data[1].created_at} />
             </Grid>
-            <Grid lg={6} md={12}>
+            <Grid lg={6} md={12} sx={{
+              width: "100%"
+            }}>
               <CartPost wrap="wrap" image={data[2].post_thumbnail} desc={data[2].post_content} line={3} isRow={true} cate={data[2].cat_title} title={data[2].post_title} url={data[2].url} date={data[2].created_at} />
             </Grid>
           </Grid>
         </Grid>
-        <Grid md={12}>
+        <Grid md={12} sx={{
+          width: "100%"
+        }}>
           <CartPost wrap="wrap" image={data[3].post_thumbnail} desc={data[3].post_content} line={3} isRow={true} isLg={true} className="max-h-[250px]" cate={data[3].cat_title} title={data[3].post_title} url={data[3].url} date={data[3].created_at} />
         </Grid>
       </Grid>
